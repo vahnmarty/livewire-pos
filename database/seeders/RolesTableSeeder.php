@@ -24,8 +24,8 @@ class RolesTableSeeder extends Seeder
     public function createAdmin()
     {
         $user = User::firstOrCreate([
-            'name' => 'Admin',
             'email' => 'admin@mystore.com',
+            'name' => 'Admin',
             'password' => bcrypt('password')
         ]);
 
@@ -37,8 +37,8 @@ class RolesTableSeeder extends Seeder
     public function createManager()
     {
         $user = User::firstOrCreate([
-            'name' => 'Manager',
             'email' => 'manager@mystore.com',
+            'name' => 'Manager',
             'password' => bcrypt('password')
         ]);
 
@@ -50,8 +50,8 @@ class RolesTableSeeder extends Seeder
     public function createCashier()
     {
         $user = User::firstOrCreate([
-            'name' => 'Cashier',
             'email' => 'cashier@mystore.com',
+            'name' => 'Cashier',
             'password' => bcrypt('password')
         ]);
 

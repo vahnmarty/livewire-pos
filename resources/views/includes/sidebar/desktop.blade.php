@@ -48,6 +48,23 @@
                     </x-sidebar-menu>
                 @endif
 
+                <x-sidebar-menu>
+                    <x-slot name="parent">
+                        <x-sidebar-menu-item link="#">
+                            <x-heroicon-s-computer-desktop
+                                class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300" />
+                            POS
+                        </x-sidebar-menu-item>
+                    </x-slot>
+                    <x-slot name="children">
+                        @foreach(App\Models\Branch::get() as $branch)
+                        <x-sidebar-menu-item link="{{ route('pos.index', $branch->id) }}">
+                            {{ $branch->name }}
+                        </x-sidebar-menu-item>
+                        @endforeach
+                    </x-slot>
+                </x-sidebar-menu>
+
             </nav>
         </div>
     </div>

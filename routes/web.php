@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Pos\OrderPage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Settings\ManageBranches;
@@ -28,6 +29,10 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => 'products'], function(){
         Route::get('/', ManageProducts::class)->name('products.index');
+    });
+
+    Route::group(['prefix' => 'pos'], function(){
+        Route::get('/{branchId}', OrderPage::class)->name('pos.index');
     });
 
 });

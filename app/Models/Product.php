@@ -15,6 +15,8 @@ class Product extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['image_preview'];
+
     const TYPE_QUANTIFIABLE = 1;
     const TYPE_MENU = 2;
 

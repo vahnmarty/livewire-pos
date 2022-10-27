@@ -17,14 +17,17 @@ class CategoriesTableSeeder extends Seeder
     {
         Category::firstOrCreate([
             'name' => 'Coffees',
+            'image' => url('img/coffee.png')
         ]);
 
         Category::firstOrCreate([
             'name' => 'Cakes',
+            'image' => url('img/cake.png')
         ]);
 
         Category::firstOrCreate([
             'name' => 'Pasta',
+            'image' => url('img/pasta.png')
         ]);
     }
 }
