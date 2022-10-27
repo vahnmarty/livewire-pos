@@ -72,8 +72,8 @@
                             wire:click="selectProduct(`{{ $productItem->id }}`)"
                             :class="active == {{ $index }} ? 'border-2 border-red-400 bg-red-100' : 'bg-gray-300 '">
                             <div>
-                                <div class="p-4 bg-gray-300">
-                                    <img class="object-fill w-auto h-10 mx-auto"
+                                <div class="bg-gray-200">
+                                    <img class="object-fill w-auto h-16 mx-auto"
                                         src="{{ $productItem->getImagePreview() }}" alt="">
                                 </div>
                                 <div class="px-2 py-1">
@@ -158,7 +158,15 @@
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <span class="text-xs text-gray-500">Cash</span>
                             </div>
-                            <input type="text"
+                            <input type="text" wire:model="cash"
+                                class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
+                                placeholder="0.00">
+                        </div>
+                        <div class="relative mt-1 rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <span class="text-xs text-gray-500">Change</span>
+                            </div>
+                            <input type="text" value="{{ $cash ? $cash - $total : 0 }}"
                                 class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
                                 placeholder="0.00">
                         </div>

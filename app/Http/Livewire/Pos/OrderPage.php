@@ -15,6 +15,8 @@ class OrderPage extends Component
     public $category_id;
     public $subtotal = 0, $total = 0, $discount = 0.00;
 
+    public $cash = 0, $change = 0;
+
     public function render()
     {
         $this->summarize();

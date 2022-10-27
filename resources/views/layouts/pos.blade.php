@@ -27,10 +27,26 @@
                             <x-application-logo class="block w-auto h-10 text-gray-600 fill-current" />
                         </a>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col space-y-8">
                         <a href="#" class="flex flex-col items-center justify-center block text-center">
                             <x-heroicon-s-home class="w-8 h-8 text-gray-600"/>
                             <p class="text-sm">Home</p>
+                        </a>
+                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                            <x-heroicon-s-shopping-cart class="w-8 h-8 text-gray-600"/>
+                            <p class="text-sm">Orders</p>
+                        </a>
+                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                            <x-heroicon-s-receipt-percent class="w-8 h-8 text-gray-600"/>
+                            <p class="text-sm">Promos</p>
+                        </a>
+                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                            <x-heroicon-s-document-duplicate class="w-8 h-8 text-gray-600"/>
+                            <p class="text-sm">Kitchen</p>
+                        </a>
+                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                            <x-heroicon-s-cog-6-tooth class="w-8 h-8 text-gray-600"/>
+                            <p class="text-sm">Settings</p>
                         </a>
                     </div>
                 </div>
