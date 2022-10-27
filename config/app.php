@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Vahnmarty\BanposInventory\Providers\InventoryProvider::class,
+        Vahnmarty\BanposInventory\Providers\InventoryServiceProvider::class,
 
         Spatie\Permission\PermissionServiceProvider::class,
 

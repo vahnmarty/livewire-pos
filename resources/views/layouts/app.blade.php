@@ -1,35 +1,69 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en" class="h-full bg-gray-100">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@yield('title', 'Admin')</title>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+        <!-- Styles -->
+        @livewireStyles
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"
+        />
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body class="h-full">
+        <div>
+            @include('includes.sidebar.mobile')
+            @include('includes.sidebar.desktop')
+            <div class="flex flex-col md:pl-64">
+                @include('includes.navbar')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <main class="flex-1">
+                    <div class="py-6">
+                        <x-alert-errors/>
+                        @yield('content')
+                        {{ $slot ?? "" }}
                     </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                </main>
+            </div>
         </div>
+
+        @stack('modals')
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
+        <script
+            type="text/javascript"
+            charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"
+        ></script>
+
+        <script>
+            $(document).ready(function () {
+                $(".table-datatable").DataTable();
+            });
+        </script>
+        @livewireScripts
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+        <x-livewire-alert::scripts />
+
+        <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
+        <x-livewire-alert::flash />
+
+        @include('includes.listeners')
     </body>
 </html>

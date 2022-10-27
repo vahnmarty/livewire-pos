@@ -1,0 +1,1 @@
+<div class="py-3 bg-gray-50" {{ $attributes }}>{{ $slot ?? '' }}</div>
