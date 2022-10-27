@@ -23,39 +23,39 @@ class RolesTableSeeder extends Seeder
 
     public function createAdmin()
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'Admin',
             'email' => 'admin@mystore.com',
             'password' => bcrypt('password')
         ]);
 
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::firstOrCreate(['name' => 'admin']);
 
         $user->assignRole($role);
     }
 
     public function createManager()
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'Manager',
             'email' => 'manager@mystore.com',
             'password' => bcrypt('password')
         ]);
 
-        $role = Role::create(['name' => 'manager']);
+        $role = Role::firstOrCreate(['name' => 'manager']);
 
         $user->assignRole($role);
     }
 
     public function createCashier()
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'Cashier',
             'email' => 'cashier@mystore.com',
             'password' => bcrypt('password')
         ]);
 
-        $role = Role::create(['name' => 'cashier']);
+        $role = Role::firstOrCreate(['name' => 'cashier']);
 
         $user->assignRole($role);
     }

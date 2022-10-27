@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Livewire\Settings\ManageBranches;
+use App\Http\Livewire\Inventory\ManageProducts;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +19,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('branches', ManageBranches::class)->name('branches.index');
+
+    Route::group(['prefix' => 'products'], function(){
+        Route::get('/', ManageProducts::class)->name('products.index');
+    });
+
+});
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
