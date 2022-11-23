@@ -53,7 +53,8 @@
                 {{-- Categories --}}
                 <section x-data="{ active: -1 }" class="grid grid-cols-4 gap-4">
                     @foreach ($categories as $index => $categoryItem)
-                        <div class="p-2 border-2 rounded-md cursor-pointer hover:border-red-300 hover:bg-red-100"
+                        <div wire:key="category-{{ $index  . '-' . time() }}" 
+                            class="p-2 border-2 rounded-md cursor-pointer hover:border-red-300 hover:bg-red-100"
                             x-on:click="active = {{ $index }}" wire:click="setCategory({{ $categoryItem->id }})"
                             :class="active == {{ $index }} ? 'border-2 border-red-400 bg-red-100' : 'bg-gray-300 '">
                             <div class="flex items-center">
@@ -69,9 +70,9 @@
                 <section class="grid grid-cols-3 gap-4 mt-8">
                     @foreach ($products as $i => $productItem)
                         @if (!$category_id || $category_id == $productItem->category_id)
-                            <div class="p-2 border-2 rounded-md shadow-md cursor-pointer hover:border-red-300 hover:bg-red-100"
-                                wire:click="selectProduct(`{{ $productItem->id }}`)"
-                                :class="active == {{ $index }} ? 'border-2 border-red-400 bg-red-100' : 'bg-gray-300 '">
+                            <div wire:key="product-{{ $i . '-' . time() }}"
+                                class="p-2 border-2 rounded-md shadow-md cursor-pointer hover:border-red-300 hover:bg-red-100"
+                                wire:click="selectProduct(`{{ $productItem->id }}`)">
                                 <div>
                                     <div class="bg-gray-200">
                                         <img class="object-fill w-auto h-16 mx-auto"
@@ -96,7 +97,8 @@
                         <!-- Orders -->
                         <div class="max-h-screen min-h-screen space-y-0.5 overflow-auto rounded-md border bg-gray-300">
                             @foreach ($orders as $key => $orderItem)
-                                <div class="flex justify-between p-2 bg-gray-100 shadow-md cursor-pointer">
+                                <div wire:key="order-{{ $key . '-' . time() }}" 
+                                    class="flex justify-between p-2 bg-gray-100 shadow-md cursor-pointer">
                                     <div class="flex">
                                         <div>
                                             <p class="text-xs">{{ Str::limit($orderItem['name']) }}</p>
@@ -129,6 +131,7 @@
                                     <x-heroicon-s-users class="w-4 h-4 text-gray-400" />
                                 </div>
                                 <input type="text"
+                                    wire:model.defer="customer"
                                     class="block w-full py-2 pl-10 text-sm bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
                                     placeholder="Customer Name">
                             </div>
@@ -137,6 +140,7 @@
                                     <x-heroicon-s-clipboard-document-list class="w-4 h-4 text-gray-400" />
                                 </div>
                                 <textarea type="text" row="3"
+                                    wire:model.defer="notes"
                                     class="block w-full py-2 pl-10 text-sm bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
                                     placeholder="Notes"></textarea>
                             </div>
@@ -197,11 +201,15 @@
                                     placeholder="0.00">
                             </div>
                         </div>
-    
-                        <button type="button"
-                            class="block w-full px-6 py-3 text-xl font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                            Take Order
-                        </button>
+                        
+                        <div>
+                            <button type="button"
+                                wire:click="checkout"
+                                class="block w-full px-6 py-3 text-xl font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                Take Order
+                            </button>
+                        </div>
+                        
                     </section>
     
                 </div>
