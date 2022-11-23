@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <main class="flex-1 max-h-screen py-3 overflow-hidden">
-                    <div class="py-6 bg-gray-200 rounded-lg ">
+                    <div class="bg-gray-200 rounded-lg ">
                         {{ $slot ?? "" }}
                     </div>
                 </main>
