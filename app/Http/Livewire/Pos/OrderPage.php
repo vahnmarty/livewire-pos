@@ -119,7 +119,7 @@ class OrderPage extends Component
 
         if($hasOrders){
             if($this->validateCash()){
-                return $this->confirmCheckout();
+                return $this->confirmCheckout(true);
             }
         }
     }
@@ -182,6 +182,7 @@ class OrderPage extends Component
         $transaction->total = $this->total;
         $transaction->cash = $this->cash;
         $transaction->change = $this->change;
+        $transaction->paid_at = $this->cash >= $this->total ? now() : null;
         $transaction->save();
 
         return $transaction;

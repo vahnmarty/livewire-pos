@@ -48,19 +48,33 @@
         </div>
     
         <div class="grid grid-cols-6 gap-8 mt-4">
-            <div class="col-span-3">
-                <div class="grid grid-cols-1 gap-1">
+            <div class="col-span-3 min-h-[33rem] max-h-[33rem] overflow-auto">
+                <div class="grid grid-cols-1 gap-2">
                     @foreach($transactions as $transaction)
-                    <div wire:key="trans-{{ $transaction['id'] . '-' . time() }}" class="grid grid-cols-4 gap-4 px-4 py-2 bg-white rounded-md">
-                        <div class="font-bold">
-                            #{{ $transaction->order_number }}
+                    <div wire:key="transgrid-{{ $transaction['id'] . '-' . time() }}" class="shadow-lg">
+                        <div class="flex bg-white">
+                            <div class="w-10 px-2 py-2 mr-3 font-bold {{ $transaction->isPaid() ? 'bg-green-200' : 'bg-red-100' }}">
+                                {{ $transaction->order_number }}
+                            </div>
+                            <div class="flex-1 py-2 space-y-1 text-sm">
+                                <p class="font-bold">{{  Str::title($transaction->order_type) }}</strong></p>
+                                <div class="text-xs">Quantity: <strong>{{ $transaction->getTotalItems() }} Items</strong></div>
+                                <div class="text-xs">Payment: <strong> {{ $transaction->isPaid() ? 'PAID' : 'PENDING' }}</strong></div>
+                            </div>
+                            <div class="self-start w-24 px-2 py-2 text-right">
+                                <h3 class="text-lg font-bold text-red-700">₱{{ number_format($transaction->total, 2) }}</h3>
+                            </div>
                         </div>
-                        <div>{{ $transaction->getTotalItems() }} Items</div>
-                        <div class="font-bold">P{{ number_format($transaction->total, 2) }}</div>
-                        <div class="text-center">
-                            <button type="viewOrder(`{{ $transaction->id }}`)">
-                                <x-heroicon-s-eye class="w-6 h-6 text-blue-600"/>
-                            </button>
+                        <div class="px-2 py-2 border-t bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <p class="flex text-xs">
+                                    <x-heroicon-o-clock class="w-4 h-4 mr-2 text-gray-400"/>
+                                    {{ $transaction->created_at->format('h:i a')}}
+                                </p>
+                                <div class="flex gap-1">
+                                    <button type="button" wire:click="select(`{{ $transaction->id }}`)" class="btn-primary btn-sm">View</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @endforeach
@@ -75,35 +89,30 @@
                         <!-- Orders -->
                         <div class="max-h-screen min-h-[33rem] space-y-0.5 overflow-auto rounded-md border bg-gray-300">
                             @foreach ($orders as $key => $orderItem)
-                                <div wire:key="order-{{ $key . '-' . time() }}" 
-                                    class="flex justify-between p-2 bg-gray-100 shadow-md cursor-pointer">
-                                    <div class="flex">
-                                        <div>
-                                            <p class="text-xs">{{ Str::limit($orderItem['name']) }}</p>
-                                            <p class="text-xs font-bold text-red-700">
-                                                {{ App\Helpers::money($orderItem['price']) }}</p>
-                                        </div>
-                                    </div>
-                                    <div x-data="{ quantity: $wire.entangle('orders.{{ $key }}.quantity').defer }" class="flex items-center gap-1">
-                                        <a href="#" x-on:click.prevent="quantity--">
-                                            <x-heroicon-m-minus-small
-                                                class="w-5 h-5 font-bold text-gray-400 hover:text-gray-700" />
-                                        </a>
-                                        <span x-text="quantity" class="text-xl font-bold"></span>
-                                        <a href="#" x-on:click.prevent="quantity++">
-                                            <x-heroicon-m-plus-small
-                                                class="w-5 h-5 font-bold text-gray-400 hover:text-gray-700" />
-                                        </a>
+                            <div wire:key="order-{{ $orderItem['id'] . '-' . time() }}" 
+                                class="flex justify-between p-2 bg-gray-100 shadow-md cursor-pointer">
+                                <div class="flex">
+                                    <div>
+                                        <p class="text-xs">{{ Str::limit($orderItem['product_name']) }}</p>
+                                        <p class="text-xs font-bold text-red-700">
+                                            {{ App\Helpers::money($orderItem['product_price']) }}</p>
                                     </div>
                                 </div>
+                                <div x-data="{ quantity: $wire.entangle('orders.{{ $key }}.quantity').defer }" class="flex items-center gap-1 mr-4">
+                                    
+                                    <span x-text="quantity" class="text-xl font-bold"></span>
+                                </div>
+                            </div>
                             @endforeach
                         </div>
                     </section>
     
                     <section class="space-y-4">
-                        <!-- Customer -->
+    
+    
+                        <!-- Summary -->
                         <div class="p-2 bg-white rounded-md">
-                            <h3 class="mb-1 text-sm font-bold">Extra</h3>
+                            <h3 class="mb-1 text-sm font-bold">Summary</h3>
                             <div class="relative mt-1 rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <x-heroicon-s-users class="w-4 h-4 text-gray-400" />
@@ -122,38 +131,6 @@
                                     class="block w-full py-2 pl-10 text-sm bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
                                     placeholder="Notes"></textarea>
                             </div>
-                        </div>
-    
-                        <!-- Payments -->
-                        <div class="p-2 bg-white rounded-md">
-                            <div class="flex justify-between">
-                                <h3 class="mb-1 text-sm font-bold">Payments</h3>
-                                <a href="#"
-                                    class="flex items-center justify-center w-4 h-4 bg-yellow-400 rounded-full">
-                                    <x-heroicon-s-plus class="w-3 h-3 font-bold text-gray-900" />
-                                </a>
-                            </div>
-                            <div class="relative mt-1 rounded-md shadow-sm">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <span class="text-xs text-gray-500">Cash</span>
-                                </div>
-                                <input type="text" wire:model="cash"
-                                    class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
-                                    placeholder="0.00">
-                            </div>
-                            <div class="relative mt-1 rounded-md shadow-sm">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <span class="text-xs text-gray-500">Change</span>
-                                </div>
-                                <input type="text" value="{{ $cash ? $cash - $total : 0 }}"
-                                    class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
-                                    placeholder="0.00">
-                            </div>
-                        </div>
-    
-                        <!-- Summary -->
-                        <div class="p-2 bg-white rounded-md">
-                            <h3 class="mb-1 text-sm font-bold">Summary</h3>
                             <div class="relative mt-1 rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <span class="text-xs text-gray-500">Sub-Total</span>
@@ -180,11 +157,21 @@
                             </div>
                         </div>
                         
-                        <div>
+                        <div class="space-y-2">
                             <button type="button"
-                                wire:click="checkout"
-                                class="block w-full px-6 py-3 text-xl font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                Take Order
+                                class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
+                                <x-heroicon-s-cog-6-tooth class="w-6 h-6 mr-4 text-white"/>
+                                Modify
+                            </button>
+                            <button type="button"
+                                class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                <x-heroicon-s-banknotes class="w-6 h-6 mr-4 text-white"/>
+                                Pay Now
+                            </button>
+                            <button type="button"
+                                class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                <x-heroicon-s-no-symbol class="w-6 h-6 mr-4 text-white"/>
+                                Cancel
                             </button>
                         </div>
                         

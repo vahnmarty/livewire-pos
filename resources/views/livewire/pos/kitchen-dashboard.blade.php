@@ -21,7 +21,7 @@
                     <div class="border-t">
                         @foreach($transaction->orders as $index => $orderItem)
                         <div wire:key="order-{{ $orderItem['id'] . '-' . time() }}" 
-                            class="flex justify-between gap-1 px-3 py-1 text-sm border">
+                            class="flex justify-between gap-1 px-3 py-1 text-sm border-t">
                             <div class="flex gap-1 text-xs {{ $orderItem->isCompleted() ? 'line-through' : '' }}">
                                 <div class="w-6">{{ $orderItem->quantity }} x </div>
                                 <div>{{ $orderItem->product_name }}</div>

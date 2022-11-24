@@ -52,4 +52,14 @@ class Transaction extends Model
         
         return true;
     }
+
+    public function isPaid()
+    {
+        return $this->paid_at;
+    }
+
+    public function isDineIn()
+    {
+        return $this->order_type == self::DINE_IN;
+    }
 }
