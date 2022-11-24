@@ -61,9 +61,6 @@
   
         <x-livewire-alert::scripts />
 
-        <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
-        <x-livewire-alert::flash />
-
         @include('includes.listeners')
     </body>
 </html>

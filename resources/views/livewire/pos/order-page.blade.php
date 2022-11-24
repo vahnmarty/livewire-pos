@@ -1,4 +1,4 @@
-<div class="xl:h-[40rem] px-8 overflow-auto overflow-hidden shadow-sm xl:max-h-[40rem] mt-4">
+<div class="xl:min-h-[36rem] px-8 overflow-auto overflow-hidden shadow-sm xl:max-h-[40rem] mt-4">
     <div class="py-6">
         <div class="grid grid-cols-6 gap-8">
             <div class="col-span-3">
@@ -26,7 +26,7 @@
             <div class="col-span-3">
                 <div class="grid grid-cols-2 gap-4">
                     <header>
-                        <h1 class="text-2xl font-bold">Order</h1>
+                        <h1 class="text-2xl font-bold">Order {{ '#' . $order_number }}</h1>
                         <p class="mt-1 text-gray-600">{{ now()->format('F d Y h:i a') }}</p>
                     </header>
                     <div class="grid grid-cols-2">

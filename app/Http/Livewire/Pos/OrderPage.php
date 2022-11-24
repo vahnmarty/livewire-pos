@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Pos;
 
+use Auth;
 use App\Models\Branch;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Transaction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class OrderPage extends Component
@@ -21,6 +23,8 @@ class OrderPage extends Component
     public $cash = 0, $change = 0;
 
     public $customer, $notes;
+
+    public $order_number;
 
     protected $rules = [
         'orders.*' => 'required',
@@ -43,6 +47,12 @@ class OrderPage extends Component
         $this->branch = Branch::findOrFail($branchId);
         $this->categories = Category::get();
         $this->products = Product::get();
+        $this->generateOrderNumber();
+    }
+
+    public function generateOrderNumber()
+    {
+        $this->order_number = (new Transaction)->generateOrderNumber();
     }
 
     public function setCategory($categoryId)
@@ -97,6 +107,68 @@ class OrderPage extends Component
 
         $data = $this->validate();
 
+        $transaction = $this->createTransaction();
+
+        try {
+            $this->createOrders($transaction);
+
+            $this->createPayment($transaction);
+
+            $this->alert('success', 'Order created successfully');
+
+            $this->reset(['order_number', 'orders', 'total', 'subtotal', 'discount', 'cash', 'customer', 'notes']);
+
+            $this->generateOrderNumber();
+        } catch (\Throwable $th) {
+
+            $transaction->delete();
+            throw $th;
+        }
+        
+    }
+
+    public function createTransaction()
+    {
+        $transaction = new Transaction;
+        $transaction->cashier_id = Auth::id();
+        $transaction->order_number = $transaction->generateOrderNumber();
+        $transaction->customer_name = $this->customer;
+        $transaction->subtotal = $this->subtotal;
+        $transaction->total_discount = $this->discount;
+        $transaction->total = $this->total;
+        $transaction->cash = $this->cash;
+        $transaction->save();
+
+        return $transaction;
+    }
+
+    public function createOrders(Transaction $transaction)
+    {
+        foreach($this->orders as $order){
+            $this->createOrder($transaction, $order);
+        }
+    }
+
+    public function createOrder(Transaction $transaction, $product)
+    {
+        $transaction->orders()->create([
+            'product_id' => $product['id'],
+            'product_name' => $product['name'],
+            'product_price' => $product['price'],
+            'quantity' => $product['quantity'],
+            'subtotal' => $product['quantity'] * $product['price'],
+            'total' => $product['quantity'] * $product['price']
+        ]);
+    }
+
+    public function createPayment(Transaction $transaction)
+    {
+        $transaction->payments()->create([
+            'method' => Transaction::PAYMENT_CASH,
+            'amount' => $this->cash,
+            'change' => $this->change,
+            'reference' => null,
+        ]);
     }
 
     public function validateOrders()
