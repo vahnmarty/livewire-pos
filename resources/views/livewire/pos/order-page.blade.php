@@ -58,8 +58,8 @@
                             x-on:click="active = {{ $index }}" wire:click="setCategory({{ $categoryItem->id }})"
                             :class="active == {{ $index }} ? 'border-2 border-red-400 bg-red-100' : 'bg-gray-300 '">
                             <div class="flex items-center">
-                                <img class="w-8 h-8" src="{{ $categoryItem->getImagePreview() }}" alt="">
-                                <p class="ml-2">{{ $categoryItem->name }}</p>
+                                <img class="w-5 h-5" src="{{ $categoryItem->getImagePreview() }}" alt="">
+                                <p class="ml-2 text-sm">{{ $categoryItem->name }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -95,7 +95,7 @@
     
                     <section>
                         <!-- Orders -->
-                        <div class="max-h-screen min-h-screen space-y-0.5 overflow-auto rounded-md border bg-gray-300">
+                        <div class="max-h-screen min-h-[33rem] space-y-0.5 overflow-auto rounded-md border bg-gray-300">
                             @foreach ($orders as $key => $orderItem)
                                 <div wire:key="order-{{ $key . '-' . time() }}" 
                                     class="flex justify-between p-2 bg-gray-100 shadow-md cursor-pointer">

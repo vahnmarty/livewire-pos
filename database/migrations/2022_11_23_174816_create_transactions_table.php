@@ -34,6 +34,7 @@ return new class extends Migration
             $table->float('vat_exemption', 15, 2)->nullable();
 
             $table->timestamp('completed_at')->nullable();
+            $table->timestamp('closed_at')->nullable();
             $table->timestamps();
         });
     }
