@@ -62,4 +62,17 @@ class Transaction extends Model
     {
         return $this->order_type == self::DINE_IN;
     }
+
+    public function scopeCompleted($query){
+        return $query->whereNotNull('completed_at');
+    }
+
+    public function scopePaid($query){
+        return $query->whereNotNull('paid_at');
+    }
+    
+
+    public function scopeReportable($query){
+        return $query->completed()->paid()->whereNull('cancelled_at');
+    }
 }

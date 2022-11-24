@@ -26,7 +26,7 @@ class ActiveOrders extends Component
 
     public $transactions = [];
 
-    public $transaction_id, $receipt_transaction_id;
+    public $transaction_id, $receipt_transaction_id, $transaction;
 
     protected $listeners = ['viewReceipt', 'confirmCheckout'];
 
@@ -48,7 +48,7 @@ class ActiveOrders extends Component
 
     public function select($id)
     {
-        $this->reset('orders');
+        $this->reset(['orders', 'transaction', 'transaction_id']);
 
         $this->transaction_id = $id;
 
@@ -61,6 +61,8 @@ class ActiveOrders extends Component
         $this->change = $transaction->change;
         $this->subtotal = $transaction->subtotal;
         $this->total = $transaction->total;
+
+        $this->transaction = $transaction;
     }
 
     public function pay()

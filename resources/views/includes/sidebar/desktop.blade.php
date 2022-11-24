@@ -65,6 +65,30 @@
                     </x-slot>
                 </x-sidebar-menu>
 
+                <x-sidebar-menu>
+                    <x-slot name="parent">
+                        <x-sidebar-menu-item link="#">
+                            <x-heroicon-s-chart-bar
+                                class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300" />
+                            Reports
+                        </x-sidebar-menu-item>
+                    </x-slot>
+                    <x-slot name="children">
+                        <x-sidebar-menu-item link="{{ route('products.index') }}">
+                            Transaction Report
+                        </x-sidebar-menu-item>
+                        <x-sidebar-menu-item link="{{ route('products.index') }}">
+                            Sales Report
+                        </x-sidebar-menu-item>
+                        <x-sidebar-menu-item link="{{ route('products.index') }}">
+                            Daily Sales Report
+                        </x-sidebar-menu-item>
+                        <x-sidebar-menu-item link="{{ route('products.index') }}">
+                            Product Sales Report
+                        </x-sidebar-menu-item>
+                    </x-slot>
+                </x-sidebar-menu>
+
             </nav>
         </div>
     </div>

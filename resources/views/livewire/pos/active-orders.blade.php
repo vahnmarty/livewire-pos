@@ -50,29 +50,29 @@
         <div class="grid grid-cols-6 gap-8 mt-4">
             <div class="col-span-3 min-h-[33rem] max-h-[33rem] overflow-auto">
                 <div class="grid grid-cols-1 gap-2">
-                    @foreach($transactions as $transaction)
-                    <div wire:key="transgrid-{{ $transaction['id'] . '-' . time() }}" class="shadow-lg">
+                    @foreach($transactions as $transactionItem)
+                    <div wire:key="transgrid-{{ $transactionItem['id'] . '-' . time() }}" class="shadow-lg">
                         <div class="flex bg-white">
-                            <div class="w-10 px-2 py-2 mr-3 font-bold {{ $transaction->isPaid() ? 'bg-green-200' : 'bg-red-100' }}">
-                                {{ $transaction->order_number }}
+                            <div class="w-10 px-2 py-2 mr-3 font-bold {{ $transactionItem->isPaid() ? 'bg-green-200' : 'bg-red-100' }}">
+                                {{ $transactionItem->order_number }}
                             </div>
                             <div class="flex-1 py-2 space-y-1 text-sm">
-                                <p class="font-bold">{{  Str::title($transaction->order_type) }}</strong></p>
-                                <div class="text-xs">Quantity: <strong>{{ $transaction->getTotalItems() }} Items</strong></div>
-                                <div class="text-xs">Payment: <strong> {{ $transaction->isPaid() ? 'PAID' : 'PENDING' }}</strong></div>
+                                <p class="font-bold">{{  Str::title($transactionItem->order_type) }}</strong></p>
+                                <div class="text-xs">Quantity: <strong>{{ $transactionItem->getTotalItems() }} Items</strong></div>
+                                <div class="text-xs">Payment: <strong> {{ $transactionItem->paid_at ? 'PAID' : 'PENDING' }}</strong></div>
                             </div>
                             <div class="self-start w-24 px-2 py-2 text-right">
-                                <h3 class="text-lg font-bold text-red-700">₱{{ number_format($transaction->total, 2) }}</h3>
+                                <h3 class="text-lg font-bold text-red-700">₱{{ number_format($transactionItem->total, 2) }}</h3>
                             </div>
                         </div>
                         <div class="px-2 py-2 border-t bg-gray-50">
                             <div class="flex items-center justify-between">
                                 <p class="flex text-xs">
                                     <x-heroicon-o-clock class="w-4 h-4 mr-2 text-gray-400"/>
-                                    {{ $transaction->created_at->format('h:i a')}}
+                                    {{ $transactionItem->created_at->format('h:i a')}}
                                 </p>
                                 <div class="flex gap-1">
-                                    <button type="button" wire:click="select(`{{ $transaction->id }}`)" class="btn-primary btn-sm">View</button>
+                                    <button type="button" wire:click="select(`{{ $transactionItem->id }}`)" class="btn-primary btn-sm">View</button>
                                 </div>
                             </div>
                         </div>
@@ -165,12 +165,21 @@
                                 <x-heroicon-s-cog-6-tooth class="w-6 h-6 mr-4 text-white"/>
                                 Modify
                             </button>
+                            @if($transaction->paid_at)
+                            <button type="button"
+                                x-on:click="$dispatch('openmodal-pay')"
+                                class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                <x-heroicon-s-check-circle class="w-6 h-6 mr-4 text-white"/>
+                                Complete Order
+                            </button>
+                            @else
                             <button type="button"
                                 x-on:click="$dispatch('openmodal-pay')"
                                 class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 <x-heroicon-s-banknotes class="w-6 h-6 mr-4 text-white"/>
-                                Pay Now
+                                Pay Now {{ $transaction->paid_at }}
                             </button>
+                            @endif
                             <button type="button"
                                 x-on:click="$dispatch('openmodal-cancel')"
                                 class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">

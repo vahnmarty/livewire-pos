@@ -6,6 +6,7 @@ use App\Http\Livewire\Pos\ActiveOrders;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Livewire\Pos\KitchenDashboard;
+use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Settings\ManageBranches;
 use App\Http\Livewire\Inventory\ManageProducts;
 
@@ -46,8 +47,6 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
