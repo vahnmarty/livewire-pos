@@ -30,14 +30,14 @@
                         <p class="mt-1 text-gray-600">{{ now()->format('F d Y h:i a') }}</p>
                     </header>
                     <div class="grid grid-cols-2">
-                        <label class="flex items-center p-2 border-2 border-red-300 rounded-l-md bg-red-50">
-                            <input type="radio" class="hidden">
+                        <label class="flex items-center p-2 border-2 rounded-l-md {{ $order_type == 'dine-in' ? 'border-red-300 bg-red-50' : 'bg-gray-50 border-gray-300'  }}">
+                            <input type="radio" class="hidden" wire:model="order_type" value="dine-in">
                             <x-heroicon-s-home-modern class="w-6 h-6" />
                             <span class="ml-2">Dine In</span>
                         </label>
                         <label
-                            class="flex items-center p-2 border-2 border-l-0 border-gray-300 rounded-r-md bg-gray-50 opacity-60 hover:opacity-100">
-                            <input type="radio" class="hidden">
+                            class="flex items-center p-2 border-2 rounded-r-md  hover:opacity-100 {{ $order_type == 'take-out' ? 'border-red-300 bg-red-50' : 'bg-gray-50 border-gray-300'  }}">
+                            <input type="radio" class="hidden" wire:model="order_type" value="take-out">
                             <x-heroicon-s-shopping-bag class="w-6 h-6" />
                             <span class="ml-2">Take-Out</span>
                         </label>

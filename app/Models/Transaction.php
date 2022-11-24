@@ -11,6 +11,9 @@ class Transaction extends Model
 
     const PAYMENT_CASH = 'cash';
 
+    const DINE_IN = 'dine-in';
+    const TAKE_OUT = 'take-out';
+
     protected $guarded = [];
 
     public function orders()

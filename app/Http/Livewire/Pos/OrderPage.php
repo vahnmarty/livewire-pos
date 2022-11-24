@@ -24,9 +24,14 @@ class OrderPage extends Component
 
     public $customer, $notes;
 
-    public $order_number;
+    public $order_number, $order_type = 'dine-in';
+
+    public $receipt_transaction_id;
+
+    protected $listeners = ['viewReceipt'];
 
     protected $rules = [
+        'order_type' => 'required',
         'orders.*' => 'required',
         'cash' => 'gte:total',
         'subtotal' => 'required',
@@ -114,11 +119,21 @@ class OrderPage extends Component
 
             $this->createPayment($transaction);
 
-            $this->alert('success', 'Order created successfully');
 
             $this->reset(['order_number', 'orders', 'total', 'subtotal', 'discount', 'cash', 'customer', 'notes']);
 
             $this->generateOrderNumber();
+
+            $this->receipt_transaction_id = $transaction->id;
+
+            $this->alert('success', 'Order created successfully', [
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'View Receipt',
+                'onConfirmed' => 'viewReceipt',
+            ]);
+
+
+            
         } catch (\Throwable $th) {
 
             $transaction->delete();
@@ -127,10 +142,16 @@ class OrderPage extends Component
         
     }
 
+    public function viewReceipt()
+    {
+        $this->emit('openWindow', route('pos.official-receipt', $this->receipt_transaction_id));
+    }
+
     public function createTransaction()
     {
         $transaction = new Transaction;
         $transaction->cashier_id = Auth::id();
+        $transaction->order_type = $this->order_type;
         $transaction->order_number = $transaction->generateOrderNumber();
         $transaction->customer_name = $this->customer;
         $transaction->subtotal = $this->subtotal;

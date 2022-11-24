@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cashier_id');
+            $table->enum('order_type', ['dine-in', 'take-out', 'delivery'])->default('dine-in');
             $table->string('order_number')->nullable();
             $table->string('customer_name')->nullable();
             $table->float('subtotal', 15, 2);

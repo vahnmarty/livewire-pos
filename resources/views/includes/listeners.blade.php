@@ -10,4 +10,8 @@
             param['type']
         )
     });
+
+    Livewire.on('openWindow', param => {
+        window.open(param);
+    })
 </script>
