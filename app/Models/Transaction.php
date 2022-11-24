@@ -41,4 +41,15 @@ class Transaction extends Model
 
         return $quantity;
     }
+
+    public function hasCompleteOrders()
+    {
+        foreach($this->orders as $order){
+            if(!$order->completed_at){
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }

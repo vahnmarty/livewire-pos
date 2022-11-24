@@ -28,7 +28,7 @@
                         </a>
                     </div>
                     <div class="flex flex-col space-y-8">
-                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                        <a href="{{ route('pos.index', 1) }}" class="flex flex-col items-center justify-center block text-center">
                             <x-heroicon-s-home class="w-8 h-8 text-gray-600"/>
                             <p class="text-sm">Home</p>
                         </a>
@@ -40,7 +40,7 @@
                             <x-heroicon-s-receipt-percent class="w-8 h-8 text-gray-600"/>
                             <p class="text-sm">Promos</p>
                         </a>
-                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                        <a href="{{ route('pos.kitchen', 1) }}" class="flex flex-col items-center justify-center block text-center">
                             <x-heroicon-s-document-duplicate class="w-8 h-8 text-gray-600"/>
                             <p class="text-sm">Kitchen</p>
                         </a>

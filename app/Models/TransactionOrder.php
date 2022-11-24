@@ -10,4 +10,9 @@ class TransactionOrder extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function isCompleted()
+    {
+        return $this->completed_at;
+    }
 }
