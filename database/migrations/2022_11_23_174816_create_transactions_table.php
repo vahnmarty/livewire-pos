@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float('total_discount', 15, 2);
             $table->float('total', 15, 2);
             $table->float('cash', 15, 2);
+            $table->float('change', 15, 2);
 
             $table->float('vat_sales', 15, 2)->nullable();
             $table->float('non_vat_sales', 15, 2)->nullable();

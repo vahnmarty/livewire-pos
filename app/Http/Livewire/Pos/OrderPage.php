@@ -137,6 +137,7 @@ class OrderPage extends Component
         $transaction->total_discount = $this->discount;
         $transaction->total = $this->total;
         $transaction->cash = $this->cash;
+        $transaction->change = $this->change;
         $transaction->save();
 
         return $transaction;

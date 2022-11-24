@@ -27,4 +27,15 @@ class Transaction extends Model
     {
         return self::whereDate('created_at', date('Y-m-d'))->count() + 1;
     }
+
+    public function getTotalItems()
+    {
+        $quantity = 0;
+
+        foreach($this->orders as $order){
+            $quantity+= $order['quantity'];
+        }
+
+        return $quantity;
+    }
 }
