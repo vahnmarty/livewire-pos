@@ -119,7 +119,7 @@
                                 </div>
                                 <input type="text"
                                     wire:model.defer="customer"
-                                    class="block w-full py-2 pl-10 text-sm bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
+                                    class="block w-full py-2 pl-10 text-sm bg-gray-100 border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
                                     placeholder="Customer Name">
                             </div>
                             <div class="relative mt-1 rounded-md shadow-sm">
@@ -128,7 +128,7 @@
                                 </div>
                                 <textarea type="text" row="3"
                                     wire:model.defer="notes"
-                                    class="block w-full py-2 pl-10 text-sm bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
+                                    class="block w-full py-2 pl-10 text-sm bg-gray-100 border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-xs"
                                     placeholder="Notes"></textarea>
                             </div>
                             <div class="relative mt-1 rounded-md shadow-sm">
@@ -143,8 +143,8 @@
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <span class="text-xs text-gray-500">Discount</span>
                                 </div>
-                                <input type="text" wire:model="discount"
-                                    class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
+                                <input type="text" value="{{ number_format($discount, 2) }}"
+                                    class="block w-full py-2 pl-10 text-lg text-right bg-gray-100 border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
                                     placeholder="0.00">
                             </div>
                             <div class="relative mt-1 rounded-md shadow-sm">
