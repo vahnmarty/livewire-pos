@@ -157,13 +157,16 @@
                             </div>
                         </div>
                         
-                        <div class="space-y-2">
+                        <div class="space-y-2" x-data="{}">
+
+                            @if($transaction_id)
                             <button type="button"
-                                class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
+                                class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-yellow-600 border border-transparent rounded-md shadow-sm opacity-20 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
                                 <x-heroicon-s-cog-6-tooth class="w-6 h-6 mr-4 text-white"/>
                                 Modify
                             </button>
                             <button type="button"
+                                x-on:click="$dispatch('openmodal-pay')"
                                 class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 <x-heroicon-s-banknotes class="w-6 h-6 mr-4 text-white"/>
                                 Pay Now
@@ -173,6 +176,47 @@
                                 <x-heroicon-s-no-symbol class="w-6 h-6 mr-4 text-white"/>
                                 Cancel
                             </button>
+                            @endif
+
+                            <x-modal ref="pay" size="sm">
+                                <x-slot name="title">Pay Order</x-slot>
+                                <div class="py-6">
+                                    <div class="relative mt-1 rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <span class="text-xs text-gray-500">Total</span>
+                                        </div>
+                                        <input type="text" value="{{ number_format($total,2) }}"
+                                            class="block w-full py-2 pl-10 text-lg text-right bg-transparent bg-gray-100 border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
+                                            disabled
+                                            placeholder="0.00">
+                                    </div>
+                                    <div class="relative mt-1 rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <span class="text-xs text-gray-500">Cash</span>
+                                        </div>
+                                        <input type="text" wire:model="cash"
+                                            class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
+                                            placeholder="0.00">
+                                    </div>
+                                    <div class="relative mt-1 rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <span class="text-xs text-gray-500">Change</span>
+                                        </div>
+                                        <input type="text" value="{{ $cash ? $cash - $total : 0 }}"
+                                            class="block w-full py-2 pl-10 text-lg text-right bg-transparent border-gray-300 rounded-md focus:border-gray-500 focus:ring-gray-500 sm:text-sm"
+                                            placeholder="0.00">
+                                    </div>
+
+                                    <div class="flex justify-center mt-8">
+                                        <button type="button"
+                                            wire:click="pay"
+                                            class="flex items-center px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                            <x-heroicon-s-banknotes class="w-6 h-6 mr-4 text-white"/>
+                                            Confirm Payment
+                                        </button>
+                                    </div>
+                                </div>
+                            </x-modal>
                         </div>
                         
                     </section>
