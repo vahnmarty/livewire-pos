@@ -150,6 +150,7 @@ class OrderPage extends Component
     public function createTransaction()
     {
         $transaction = new Transaction;
+        $transaction->branch_id = $this->branch->id;
         $transaction->cashier_id = Auth::id();
         $transaction->order_type = $this->order_type;
         $transaction->order_number = $transaction->generateOrderNumber();

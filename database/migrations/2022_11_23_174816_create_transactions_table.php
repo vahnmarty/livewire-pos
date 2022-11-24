@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('cashier_id');
             $table->enum('order_type', ['dine-in', 'take-out', 'delivery'])->default('dine-in');
             $table->string('order_number')->nullable();

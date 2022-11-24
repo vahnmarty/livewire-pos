@@ -27,7 +27,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <header>
                         <h1 class="text-2xl font-bold">Order {{ '#' . $order_number }}</h1>
-                        <p class="mt-1 text-gray-600">{{ now()->format('F d Y h:i a') }}</p>
+                        <p class="mt-1 text-sm text-gray-600">{{ now()->format('F d, Y h:i a') }}</p>
                     </header>
                     <div class="grid grid-cols-2">
                         <label class="flex items-center p-2 border-2 rounded-l-md {{ $order_type == 'dine-in' ? 'border-red-300 bg-red-50' : 'bg-gray-50 border-gray-300'  }}">
