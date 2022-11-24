@@ -28,12 +28,11 @@ class OrderPage extends Component
 
     public $receipt_transaction_id;
 
-    protected $listeners = ['viewReceipt'];
+    protected $listeners = ['viewReceipt', 'confirmCheckout'];
 
     protected $rules = [
         'order_type' => 'required',
         'orders.*' => 'required',
-        'cash' => 'gte:total',
         'subtotal' => 'required',
         'total' => 'required',
         'customer' => 'nullable',
@@ -106,10 +105,27 @@ class OrderPage extends Component
 
     public function checkout()
     {
-        $this->validateOrders();
+        if($this->cash <= 0 && $this->order_type == 'dine-in')
+        {
+            $this->alert('question', 'Cash not found. Pay Later?', [
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Yes, Pay Later',
+                'onConfirmed' => 'confirmCheckout',
+            ]);
+            return false;
+        }
+        
+        $hasOrders = $this->validateOrders();
 
-        $this->validateCash();
+        if($hasOrders){
+            if($this->validateCash()){
+                return $this->confirmCheckout();
+            }
+        }
+    }
 
+    public function confirmCheckout()
+    {
         $data = $this->validate();
 
         $transaction = $this->createTransaction();
@@ -139,12 +155,18 @@ class OrderPage extends Component
             $transaction->delete();
             throw $th;
         }
-        
     }
 
     public function viewReceipt()
-    {
-        $this->emit('openWindow', route('pos.official-receipt', $this->receipt_transaction_id));
+    {   
+        $transaction = Transaction::find($this->receipt_transaction_id);
+
+        if( $transaction->paid_at ){
+            $this->emit('openWindow', route('pos.official-receipt', $this->receipt_transaction_id));
+        }else{
+            $this->emit('openWindow', route('pos.temporary-receipt', $this->receipt_transaction_id));
+        }
+        
     }
 
     public function createTransaction()
@@ -198,13 +220,18 @@ class OrderPage extends Component
     {
         if(!count($this->orders)){
             $this->alert('error', 'Please select an order!');
+            return false;
         }
+        return true;
     }
 
     public function validateCash()
     {
         if($this->cash < $this->total){
             $this->alert('error', 'Insufficient cash!');
+            return false;
         }
+
+        return true;
     }
 }
