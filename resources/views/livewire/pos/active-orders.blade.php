@@ -172,6 +172,7 @@
                                 Pay Now
                             </button>
                             <button type="button"
+                                x-on:click="$dispatch('openmodal-cancel')"
                                 class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                 <x-heroicon-s-no-symbol class="w-6 h-6 mr-4 text-white"/>
                                 Cancel
@@ -213,6 +214,23 @@
                                             class="flex items-center px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                             <x-heroicon-s-banknotes class="w-6 h-6 mr-4 text-white"/>
                                             Confirm Payment
+                                        </button>
+                                    </div>
+                                </div>
+                            </x-modal>
+
+                            <x-modal ref="cancel" size="md">
+                                <x-slot name="title">Cancel Order</x-slot>
+                                <div class="py-6">
+                                    <div class="relative mt-1 rounded-md shadow-sm">
+                                        <label for="">Cancellation Reason</label>
+                                        <textarea rows="5" class="w-full rounded-md" placeholder="Write your explanation (Optional)"></textarea>
+                                    </div>
+                                    <div class="flex justify-center mt-8">
+                                        <button type="button"
+                                            wire:click="pay"
+                                            class="flex items-center px-6 py-2 font-medium text-center text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                            Confirm Cancel
                                         </button>
                                     </div>
                                 </div>
