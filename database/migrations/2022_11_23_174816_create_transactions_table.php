@@ -35,6 +35,7 @@ return new class extends Migration
 
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('closed_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Pos\OrderPage;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Pos\ActiveOrders;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Livewire\Pos\KitchenDashboard;
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'pos'], function(){
         Route::get('/{branchId}', OrderPage::class)->name('pos.index');
         Route::get('/{branchId}/kitchen', KitchenDashboard::class)->name('pos.kitchen');
+        Route::get('/{branchId}/orders', ActiveOrders::class)->name('pos.orders');
         Route::get('/{transactionId}/temporary-receipt', [OrderController::class, 'temporaryReceipt'])->name('pos.temporary-receipt');
         Route::get('/{transactionId}/official-receipt', [OrderController::class, 'officialReceipt'])->name('pos.official-receipt');
     });

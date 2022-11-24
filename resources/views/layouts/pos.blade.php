@@ -32,7 +32,7 @@
                             <x-heroicon-s-home class="w-8 h-8 text-gray-600"/>
                             <p class="text-sm">Home</p>
                         </a>
-                        <a href="#" class="flex flex-col items-center justify-center block text-center">
+                        <a href="{{ route('pos.orders', 1) }}" class="flex flex-col items-center justify-center block text-center">
                             <x-heroicon-s-shopping-cart class="w-8 h-8 text-gray-600"/>
                             <p class="text-sm">Orders</p>
                         </a>
