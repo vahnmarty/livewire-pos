@@ -167,7 +167,7 @@
                             </button>
                             @if($transaction->paid_at)
                             <button type="button"
-                                x-on:click="$dispatch('openmodal-pay')"
+                                x-on:click="if(confirm('Complete?')){ $wire.completeOrder(`{{ $transaction_id }}`) }"
                                 class="flex items-center w-full px-6 py-2 font-medium text-center text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 <x-heroicon-s-check-circle class="w-6 h-6 mr-4 text-white"/>
                                 Complete Order

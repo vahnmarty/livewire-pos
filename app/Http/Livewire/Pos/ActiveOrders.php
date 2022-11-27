@@ -115,4 +115,15 @@ class ActiveOrders extends Component
         }
         
     }
+
+    public function completeOrder($id)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->completed_at = now();
+        $transaction->save();
+
+        $this->alert('success', 'Order successfully completed!');
+
+        $this->getTransactions();
+    }
 }

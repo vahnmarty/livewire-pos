@@ -12,51 +12,14 @@
             <div class="mt-8">
                 <dl class="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3 lg:grid-cols-4">
 
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">Total Sales</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897</dd>
-                    </div>
+                    @foreach ($widgets as $widgetItem)
+                        <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
+                            <dt class="text-sm font-medium text-gray-500 truncate">{{ $widgetItem['title'] }}</dt>
+                            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                                {{ $widgetItem['value'] }}</dd>
+                        </div>
+                    @endforeach
 
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">This Month Sales</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
-                    </div>
-
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">Last 7 days Sales</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
-                    </div>
-
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">Today Sales</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
-                    </div>
-
-                </dl>
-            </div>
-
-            <div class="mt-8">
-                <dl class="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3 lg:grid-cols-4">
-
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">Total Orders</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897</dd>
-                    </div>
-
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">This Month Orders</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
-                    </div>
-
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">Last 7 days Orders</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
-                    </div>
-
-                    <div class="px-4 py-5 overflow-hidden bg-white rounded-lg shadow sm:p-6">
-                        <dt class="text-sm font-medium text-gray-500 truncate">Today Orders</dt>
-                        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">24.57%</dd>
-                    </div>
                 </dl>
             </div>
 
